@@ -18,11 +18,17 @@ Resolve the default branch with `gh repo view --json defaultBranchRef --jq ".def
 
 ## 2. Label
 
+Resolve names with this skill's `scripts/labels.py` (the `scripts` directory next to this file). Run it from the repo being shipped:
+
 ```
-gh label list --json name --jq ".[].name" --limit 1000
+python "<skill-dir>/scripts/labels.py"
 ```
 
-Stop if the list is empty.
+Stdout is one label name per line. The script reads `<repo>/.github/.labels` when that file was refreshed less than 30 days ago and does not run `gh`. Otherwise it runs `gh label list`, rewrites `.github/.labels`, and prints those names. A first line `# refreshed: <UTC timestamp>` is cache metadata, not a label.
+
+`.github/.labels` is a local cache. The script adds it to `.git/info/exclude` when it is not already ignored. Never stage it, commit it, or put it in a group.
+
+Stop if the script fails or prints no names.
 
 Walk the tokens of extra text (or of the user's pick) longest-span-first. A span matches when it equals a name (case-insensitive), or is a single token that is a unique prefix of a name (`enh` → `enhancement`), or is `feat`/`feature` → `enhancement` or `fix` → `bug` when that target is on the list. Skip `all` and a bare integer; those are selectors. The first unique match is `label`; leftover tokens are the selector or title/slug hint.
 

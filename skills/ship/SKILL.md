@@ -10,4 +10,4 @@ argument-hint: optional label
 Ship this session's changes as a labeled PR. Partition pending work into logical groups; with more than one group, print a sequence of ships and wait for a selector.
 
 1. Read `procedure.md`.
-2. Extra text after `/ship` is an optional label, then a group selector (`all`, index, slug) or title/slug hint.
+2. Extra text after `/ship` is an optional label, then a group selector (`all`, index, slug) or title/slug hint. Label names come from `.github/.labels`, refreshed at most every 30 days.
