@@ -120,6 +120,8 @@ def ensure_excluded(repo: Path) -> None:
 
 
 def emit(names: list[str]) -> None:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     sys.stdout.write("\n".join(names) + "\n")
 
 
